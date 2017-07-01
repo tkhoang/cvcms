@@ -20,7 +20,7 @@ module.exports = {
     //'webpack-hot-middleware/client?reload=true&path=/admin/__webpack_hmr',
 	'webpack/hot/dev-server',
     //'webpack-hot-middleware/client?reload=true&dynamicPublicPath=true',
-    path.join(__dirname, 'app/main.jsx')
+    path.join(__dirname, 'adminclient/index.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -30,7 +30,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
 		title: 'admin',
-		template: 'app/index-admin.html',
+		template: 'adminclient/index.html',
 		inject: false
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
