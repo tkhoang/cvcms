@@ -1,0 +1,53 @@
+extends layout
+
+block content
+	//-include navebar.html
+	div.container
+		div.row
+			div.col-md-3
+				div(class=['infos','bloc'])
+					div.name #{infos.NAME}
+					div.age-place #{infos.LOCATION}  #{__("%d yo", infos.AGE)}
+					span.icons
+						a(target='_blank' href='mailto:'+infos.EMAIL)
+							image(src='images/logo_mail.png')
+						a(target='_blank' href='skype:'+infos.SKYPE)
+							image(src='images/logo_skype.png')
+						a(target='_blank' href=infos.LINKEDIN)
+							image(src='images/logo_linkedin.png')
+						a(target='_blank' href=infos.VIADEO)
+							image(src='images/logo_viadeo.png')
+						a(target='_blank' href=infos.GITHUB)
+							image(src='images/logo_github.png')
+						a(target='_blank' href=infos.STACKOVERFLOW)
+							image(src='images/logo_so.png')
+				img(class="img-thumbnail" src=infos.PROFILEPIC)
+				div(class=['languages', 'bloc'])
+					div.bloc-label #{__("Language")}
+				div(class=['keyskills', 'bloc'])
+					div.bloc-label #{__("Key Skills")}
+					each keyskill in keyskills
+						div.keyskill
+							div.title #{keyskill.name}
+							div.description !{keyskill.description}
+			div.col-md-8
+				div.position #{infos.POSITION}
+				div.summary
+					div.cv-header #{__("Summary")}
+					p !{infos.SUMMARY}
+				div.experiences
+					div.cv-header= __("exp")
+					each experience in experiences
+						div.experience
+							div(class='logo-'+experience.type)
+							div.experience-content
+								if !experience.end_month && !experience.end_year
+									span.dates #{__("Since")} #{__(experience.start_month)} #{experience.start_year} 
+								else if experience.end_month != experience.start_month || experience.end_year != experience.start_year
+									span.dates #{__("From")} #{__(experience.start_month)} #{experience.start_year} #{__("to")} #{__(experience.end_month)} #{experience.end_year} 
+								else
+									span.dates #{__(experience.start_month)} #{experience.start_year} 
+								span.title #{experience.title} #{__("at")} #{experience.establishment}, #{experience.location}
+								div.description !{experience.description}
+				div.cv-header
+					div.bloc-label #{__("Personnal Interest")}

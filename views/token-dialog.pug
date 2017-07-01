@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title= 'token dialog'
+  body
+    div.container
+    p hi #{user} !
+    p  #{client} is requesting full access to your account.
+    form(class='form-signin' method='POST' action='/api/oauth2/authorize')
+     input(id='transaction_id' type='hidden' name='transaction_id' value=transactionID)
+     input(id='redirect_uri' type='hidden' name='redirect_uri' value='/admin/')
+     button(type='submit' value='Allow' id='allow')  allow
+     button(type='submit' value='Deny' name='cancel' id='deny') deny

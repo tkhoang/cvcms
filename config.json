@@ -1,0 +1,10 @@
+{
+  "_comment":" database type commented by _ prefix",
+  "database-type":"postgresql",
+  "_database-type":"sqlite3",
+  "database-url":"",
+  "database-name": "cv_base.db",
+  "database-user":"myapp",
+  "database-password":"dbpass",
+  "_database-user":""
+}

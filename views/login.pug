@@ -1,0 +1,16 @@
+block content
+	div.container
+		form(class='form-signin' method='POST' action=action)
+			h2.form-signin-heading #{__("Please sign in")}
+			label(for='inputUsername' class='sr-only' )
+				#{__("Username")}
+			input(id='inputUsername' name='inputUsername' class='form-control' placeholder=__("Username") required autofocus)
+			label(for='inputPassword' class='sr-only')
+				#{__("Password")}
+			input(type='password' id='inputPassword' name='inputPassword' class='form-control' placeholser=__("Password") required)
+			input(id='transaction_id' type='hidden' name='transaction_id' value=transactionID)
+			div.checkbox
+				label
+				input(type='checkbox' value='remember-me') 
+				span #{__("Remember me")}
+			button( class='btn btn-lg btn-primary btn-block' type = 'submit') #{__("Sign in")}
