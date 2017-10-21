@@ -25,8 +25,9 @@ const port = isDeveloping ? 3000 : process.env.PORT;
 
 // implementing routes
 var routes 	= require ('./routes/index'),
-	api 	= require ('./routes/api'),
+	api 	= require ('./routes/api');
 	admin 	= require ('./routes/admin');
+	
 
 i18n.configure({
     locales:['en'],
@@ -44,7 +45,7 @@ app.set('view engine', 'pug');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(i18n.init);
@@ -54,7 +55,6 @@ app.use(session({
 	  resave: true
 	}));
 app.use(passport.initialize());
-
 
 app.use('/', routes);
 app.use('/api',api);

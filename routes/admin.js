@@ -1,53 +1,44 @@
-var 
-	express 		= require('express'),
-	i18n 			= require("i18n"),
-	adminControler	= require('../controllers/admin'),
-	authController 	= require('../controllers/auth'),
-	path 			= require('path'),
-	oauth2Controller= require('../controllers/oauth2');
-
-var isProduction = process.env.NODE_ENV === 'production';
-const isDeveloping = process.env.NODE_ENV !== 'production';	
-	
-const webpack = require('webpack');
-const webpackMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('../webpack.config.js');
+var express = require('express');
+var router = express.Router();
+var adminControler	= require('../controllers/admin');
+var authController 	= require('../controllers/auth');
+var oauth2Controller= require('../controllers/oauth2');
 
 
-if (isDeveloping) {
-	const compiler = webpack(config);
-	const middleware = webpackMiddleware(compiler, {
-		publicPath: config.output.publicPath,
-		contentBase: 'src',
-		stats: {
-			colors: true,
-			hash: false,
-			timings: true,
-			chunks: false,
-			chunkModules: false,
-			modules: false
-		}
-	});
-	router.use(middleware);
-	router.use(webpackHotMiddleware(compiler));
-	router.get('/', function response(req, res) {
-		res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
-		res.end();
-	  });
-} else {
-	router.use(express.static(__dirname + '/dist'));
-	router.get('/', function response(req, res) {
-		res.sendFile(path.join(__dirname, 'dist/index.html'));
-	});
-}
-/*
-router.get('/', function(req, res, next) {
-	
-	i18n.setLocale('en');
-	 var params = { };
-	 res.render('admin', params);
-	
-});*/
+var config = require ('./../webpack.config.js');
+var cssModulesRequireHook = require ( 'css-modules-require-hook');
+
+var webpack = require ( 'webpack');
+var webpackDevMiddleware = require ( 'webpack-dev-middleware');
+var webpackHotMiddleware = require ( 'webpack-hot-middleware');
+
+cssModulesRequireHook({generateScopedName: '[path][name]-[local]'});
+const compiler = webpack(config);
+
+
+// Serve hot-reloading bundle to client
+router.use(webpackDevMiddleware(compiler, {
+  noInfo: true, publicPath: config.output.publicPath, stats: { colors: true } 
+}));
+router.use(webpackHotMiddleware(compiler));
+
+
+// Do "hot-reloading" of react stuff on the server
+// Throw away the cached client modules and let them be re-required next time
+compiler.plugin('done', function() {
+  console.log("Clearing /client/ module cache from server");
+  Object.keys(require.cache).forEach(function(id) {
+    if (/[\/\\]adminclient[\/\\]/.test(id)) delete require.cache[id];
+  });
+});
+
+router.get('/', function(req, res, next) {	
+	var params = { };
+	res.render('admin', params);
+});
+
+
+
+
 
 module.exports = router;
