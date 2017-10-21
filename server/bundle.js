@@ -3,7 +3,7 @@ var WebpackDevServer = require('webpack-dev-server');
 var webpackConfig = require('./../webpack.config.js');
 var path = require('path');
 var fs = require('fs');
-var mainPath = path.resolve(__dirname, '..', 'app', 'index.jsx');
+var mainPath = path.resolve(__dirname, 'adminclient', 'index.js');
 
 module.exports = function () {
 
@@ -34,10 +34,12 @@ module.exports = function () {
 
     // Configure hot replacement
     hot: true,
+    historyApiFallback: true,
 
     // The rest is terminal configurations
     quiet: false,
     noInfo: true,
+    inline: true,
     stats: {
       colors: true
     }
@@ -45,7 +47,7 @@ module.exports = function () {
 
   // We fire up the development server and give notice in the terminal
   // that we are starting the initial bundle
-  bundler.listen(8080, 'localhost', function () {
+  bundler.listen(8080, '0.0.0.0', function () {
     console.log('Bundling project, please wait...');
   });
 

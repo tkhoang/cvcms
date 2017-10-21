@@ -6,7 +6,7 @@ html
     div.container
     p hi #{user} !
     p  #{client} is requesting full access to your account.
-    form(class='form-signin' method='POST' action='/api/oauth2/authorize')
+    form(class='form-signin' method='POST' action='/api/oauth2/authorize' contentType='application/x-www-form-urlencoded; charset=utf-8')
      input(id='transaction_id' type='hidden' name='transaction_id' value=transactionID)
      input(id='redirect_uri' type='hidden' name='redirect_uri' value='/admin/')
      button(type='submit' value='Allow' id='allow')  allow

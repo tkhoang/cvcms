@@ -1,9 +1,29 @@
-import React from 'react'
+import React,{ PropTypes } from 'react'
+import { connect } from 'react-redux';
+import LoginForm from '../components/LoginForm';
 
-const LoginPage = () => (
-    <div>
-		<h1>Back on track</h1>
-    </div>
-)
+class LoginPage extends React.Component {
+ 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+       errors: {},
+       user: {
+         email: '',
+         password: ''
+       }
+     }
+   }
+
+   render() {
+     return (
+       <LoginForm
+          errors={this.state.errors}
+          user={this.state.user}
+        />
+       );
+   }
+}
 
 export default LoginPage
