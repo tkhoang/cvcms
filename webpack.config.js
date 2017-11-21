@@ -4,7 +4,7 @@ process.traceDeprecation = true;
 
 var path = require('path');
 var buildPath = path.resolve(__dirname, 'public', 'build');
-var mainPath = path.resolve(__dirname, 'adminclient', 'index.js');
+var mainPath = path.resolve(__dirname, 'adminclient', 'index.jsx');
 
 var qs = require( 'querystring');
 
@@ -34,7 +34,7 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin()
   ],
   resolve: {
-    extensions: ['.js', 'jsx'],
+    extensions: ['.js', '.jsx'],
     alias: {
       request: 'browser-request'
     }

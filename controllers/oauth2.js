@@ -116,16 +116,24 @@ server.exchange(oauth2orize.exchange.password(function(client, username,password
         // Success
        console.log('password match'); 
         //create a new token
+        var generated_token = uid(256);
         new token ({
-          access_token: uid(256),
+          access_token: generated_token,
           client_id: client.attributes.id,
           user_id: user.attributes.id,
           expires: new Date(new Date().getTime() + (30 * 60 * 60 * 1000))
         })
         .save(null, {method:"insert"})
         .then(function (token){
-          console.log('token saved '+token); 
-          callback(null, token);
+          console.log('token saved '+token.toJSON().access_token); 
+          var response = {
+            id: user.attributes.id,
+            username: username,
+            firstName: 'user.firstName',
+            lastName: 'user.lastName',
+            token: generated_token 
+          }
+          callback(null, response);
           
         }).catch(function(err) {console.log('save failed!'+err);return callback(err);});
         
