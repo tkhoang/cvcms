@@ -41,7 +41,6 @@ var user = bookshelf.Model.extend({
       if(err) return callback(err);
       callback (null, isMatch);
     });
-  }
-});
+}});
 
 module.exports = user;

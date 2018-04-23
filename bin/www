@@ -4,14 +4,26 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var utils = require('../utils');
 var debug = require('debug')('cvdev-sandbox2:server');
-var http = require('http');
-
+utils.initializeDbConfig('./db.json').then(function () {
+  debug ('model');
+  var models = require('../models'); 
+  models.createSchema(startServer)
+//  models.createSchema().then (
+//    debug('finishing to create the database')
+//  )
+});
+//).then(
+//  startServer ()
+//);
 /**
  * Get port from environment and store in Express.
  */
-
+function startServer () {
+debug('start server');
+var app = require('../app');
+var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
@@ -87,4 +99,8 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+}
+ function close () {
+  server.close ();
+}
 }

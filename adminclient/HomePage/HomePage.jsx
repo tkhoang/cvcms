@@ -6,9 +6,9 @@ import { LeftMenu } from '../LeftMenu';
 import { userActions } from '../_actions';
  
 class HomePage extends React.Component {
-  componentDidMount() {
-    this.props.dispatch(userActions.getAll());
-  }
+  //componentDidMount() {
+  //  this.props.dispatch(userActions.getAll());
+  //}
  
  
   render() {
@@ -18,7 +18,7 @@ class HomePage extends React.Component {
         <LeftMenu/>
         <div className="container"> 
             logged as :{user.firstName}
-            <p>You are logged in with React!!</p>
+            <p>You are logged in with React!</p>
         </div>
       </div>
     );

@@ -1,0 +1,10 @@
+MyCvs: My Cvs
+CvListHeadMessage: My list of Cvs  
+CvButtonNew: New Cv
+CvFormHeaderLabel: New Cv 
+CvFormNameLabel: The name of the Cv
+CvFormDescLabel: The Description of the Cv
+CvButtonAdd: Add
+CvFormNameMessage: The name is mandatory
+CvDelete: Delete
+CvDeleting: Deleting

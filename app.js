@@ -1,38 +1,40 @@
 // DEBUG=cvdev-sandbox2:* npm start
 
-
 // implementing configuration
-var nconf = require('nconf');
+/*var nconf = require('nconf');
 nconf.argv()
-	 .env()
-	 .file({ file: './config.json' })
-	 .set('rootpath',__dirname);
-
+   .env()
+   .file({ file: './db.json' })
+   .set('rootpath',__dirname);
+//*/
 // modules
-var express 	= require('express'),
-	i18n 		= require("i18n"),
-	path 		= require('path'),
-	favicon 	= require('serve-favicon'),
-	logger 		= require('morgan'),
-	cookieParser= require('cookie-parser'),
-	bodyParser 	= require('body-parser'),
-	passport 	= require('passport'),
-	session 	= require('express-session');
+var express = require('express'),
+  i18n = require("i18n"),
+  path = require('path'),
+  favicon = require('serve-favicon'),
+  logger = require('morgan'),
+  cookieParser = require('cookie-parser'),
+  bodyParser = require('body-parser'),
+  passport = require('passport'),
+  session = require('express-session');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 
 
+
+
 // implementing routes
-var routes 	= require ('./routes/index'),
-	api 	= require ('./routes/api');
-	admin 	= require ('./routes/admin');
-	
+var routes   = require ('./routes/index'),
+  api   = require ('./routes/api');
+  admin   = require ('./routes/admin')
+  init = require ('./routes/init');
+  
 
 i18n.configure({
-    locales:['en'],
-    directory: __dirname + '/locales',
-    extension: '.json'
+  locales:['en'],
+  directory: __dirname + '/locales',
+  extension: '.json'
 });
 
 var app = express();
@@ -50,15 +52,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(i18n.init);
 app.use(session({
-	  secret: 'Super Secret Session Key',
-	  saveUninitialized: true,
-	  resave: true
-	}));
+  secret: 'Super Secret Session Key',
+  saveUninitialized: true,
+  resave: true
+  }));
 app.use(passport.initialize());
 
 app.use('/', routes);
 app.use('/api',api);
 app.use('/admin',admin);
+app.use('/init',init);
 
 
 // catch 404 and forward to error handler

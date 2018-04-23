@@ -1,2 +1,4 @@
 adminclient/
+initclient/
 node_module/
+*db.json*

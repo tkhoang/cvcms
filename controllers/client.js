@@ -2,6 +2,7 @@ var client = require ('../models/client');
 var uuid = require('node-uuid');
 
 exports.postClients = function (req, res){
+  console.log('creating new customer');
   new client({
     uuid: uuid.v1(),
     clientname: req.body.name,

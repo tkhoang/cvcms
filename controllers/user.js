@@ -1,7 +1,9 @@
 var user = require('../models/user');
 var uuid = require('node-uuid');
+const debug = require('debug')('cvdev-sandbox2:server');
 
 exports.postUsers = function(req, res) {
+	debug("creating a new user", req.body);
 	new user ({uuid: uuid.v1(), 
 			   username:req.body.username, 
 			   password: req.body.password, 
@@ -9,8 +11,17 @@ exports.postUsers = function(req, res) {
 		.save(null, {method: 'insert'})
 		.then(function(user){
 			res.json({message: 'user inserted', data:user.toJSON()});
-		}).catch(user.NoRowsUpdatedError, function(err) {
-			res.send({message: 'user not inserted', description:err});
+		}).catch(function(err) {
+      console.log(err.message);
+      if ( new RegExp('duplicate key value').test(err.message))
+      {
+//        res.status(400);
+        res.send({message: 'unique_constraint', description:'user already exists'});
+      }else
+      {
+//        res.status(400);
+			  res.send({message: 'user not inserted', description:err});
+      }
 		});
 };
 

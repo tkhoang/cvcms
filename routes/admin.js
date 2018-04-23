@@ -39,7 +39,8 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/*', function(req, res, next) {	
-  res.redirect('/admin');
+	var params = { };
+	res.render('admin', params);
 });
 
 

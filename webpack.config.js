@@ -5,6 +5,7 @@ process.traceDeprecation = true;
 var path = require('path');
 var buildPath = path.resolve(__dirname, 'public', 'build');
 var mainPath = path.resolve(__dirname, 'adminclient', 'index.jsx');
+var initPath = path.resolve(__dirname, 'initclient', 'index.jsx');
 
 var qs = require( 'querystring');
 
@@ -19,13 +20,22 @@ exports.puts = util.deprecate(function() {
 
 module.exports = {
   devtool: '#eval-source-map',
-  entry: [
-    'webpack-hot-middleware/client?reload=true&path=/admin/__webpack_hmr',
-    mainPath
-  ],
+  entry: {
+    bundle:
+    [
+      'webpack-hot-middleware/client?reload=true&path=/admin/__webpack_hmr',
+      mainPath
+    ]
+    ,init:
+    [
+      'webpack-hot-middleware/client?reload=true&path=/admin/__webpack_hmr',
+      initPath
+    ]
+
+  },
   output: {
     path: buildPath,
-    filename: 'bundle.js',
+    filename: '[name].js',
     publicPath: '/build/',
   },
   plugins: [
@@ -73,7 +83,8 @@ module.exports = {
           importLoaders: 1,
           localIdentName: '[path][name]-[local]'
         })
-      }
+      },
+      { test: /\.ya?ml$/, loader: 'json-loader!yaml-loader' }
 
     ]
   }

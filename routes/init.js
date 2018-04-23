@@ -3,7 +3,7 @@ var router = express.Router();
 var initControler	= require('../controllers/init');
 var authController 	= require('../controllers/auth');
 var oauth2Controller= require('../controllers/oauth2');
-
+var models = require('../models'); 
 
 var config = require ('./../webpack.config.js');
 var cssModulesRequireHook = require ( 'css-modules-require-hook');
@@ -17,10 +17,10 @@ const compiler = webpack(config);
 
 
 // Serve hot-reloading bundle to client
-router.use(webpackDevMiddleware(compiler, {
-  noInfo: true, publicPath: config.output.publicPath, stats: { colors: true } 
-}));
-router.use(webpackHotMiddleware(compiler));
+//router.use(webpackDevMiddleware(compiler, {
+//  noInfo: true, publicPath: config.output.publicPath, stats: { colors: true } 
+//}));
+//router.use(webpackHotMiddleware(compiler));
 
 
 // Do "hot-reloading" of react stuff on the server
@@ -34,7 +34,17 @@ compiler.plugin('done', function() {
 
 router.get('/', function(req, res, next) {	
 	var params = { };
-	res.render('init', params);
+  var cb;
+  models.isInitialized((isInit)=>{
+    if (isInit)
+    {
+      res.redirect('/admin'); 
+    }
+    else
+    {
+      res.render('init', params);
+    }
+  });
 });
 
 

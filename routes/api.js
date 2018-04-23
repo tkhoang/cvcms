@@ -4,6 +4,7 @@ var
   infos   = require('../controllers/info.js'),
   users   = require('../controllers/user.js'),
   clients = require('../controllers/client.js')
+  cvs     = require('../controllers/cv.js')
   authController  = require('../controllers/auth'),
   oauth2Controller= require('../controllers/oauth2'),
   router  = express.Router();
@@ -35,7 +36,6 @@ router.route('/users/:username/:password')
   .get(users.testUserPassword);
 
 router.route('/clients')
-  .get(authController.isAuthenticated,clients.getClients)
   .post(authController.isAuthenticated,clients.postClients);
 
 
@@ -50,5 +50,12 @@ router.route('/oauth2/authorize')
 router.route('/oauth2/token')
     .post(authController.isAuthenticated, oauth2Controller.token);
 
+router.route('/cvs')
+  .get(authController.isAuthenticated,cvs.getCvs)
+  .post(authController.isAuthenticated,cvs.postCv);
+
+
+router.route('/cvs/:id')
+  .delete(authController.isAuthenticated,cvs.deleteCv);
 
 module.exports = router;

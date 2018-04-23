@@ -6,9 +6,6 @@ import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 import { HomePage } from '../HomePage';
-import { LoginPage } from '../LoginPage';
-import { RegisterPage } from '../RegisterPage';
-import { ExperiencesPage } from '../ExperiencesPage';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,10 +28,7 @@ class App extends React.Component {
             }
             <Router history={history}>
               <div>
-                <PrivateRoute exact path="/admin" component={HomePage} />
-                <PrivateRoute exact path="/admin/experiences" component={ExperiencesPage} />
-                <Route path="/admin/login" component={LoginPage} />
-                <Route path="/admin/register" component={RegisterPage} />
+                <Route exact path="/init" component={HomePage} />
               </div>
             </Router>
           </div>
