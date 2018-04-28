@@ -1,4 +1,6 @@
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 'use strict';
 process.traceDeprecation = true;
 
@@ -23,26 +25,35 @@ module.exports = {
   entry: {
     bundle:
     [
-      'webpack-hot-middleware/client?reload=true&path=/admin/__webpack_hmr',
+      'webpack-hot-middleware/client?reload=true&path=/__webpack_hmr',
       mainPath
     ]
     ,init:
     [
-      'webpack-hot-middleware/client?reload=true&path=/admin/__webpack_hmr',
+      'webpack-hot-middleware/client?reload=false&path=/__webpack_hmr',
       initPath
     ]
 
   },
+  devServer: {
+    contentBase: '/admin/',
+    hot: true
+  },
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new CleanWebpackPlugin(['build']),
+    new HtmlWebpackPlugin({
+      title: 'Hot Module Replacement'
+    }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ],
   output: {
     path: buildPath,
     filename: '[name].js',
     publicPath: '/build/',
   },
-  plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  ],
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
@@ -77,12 +88,13 @@ module.exports = {
       // CSS
       {
         test: /\.css$/,
-        include: path.join(buildPath, 'client'),
-        loader: 'style-loader!css-loader?' + qs.stringify({
-          modules: true,
-          importLoaders: 1,
-          localIdentName: '[path][name]-[local]'
-        })
+        use : [ 'style-loader', 'css-loader']
+        //include: path.join(buildPath, 'build'),
+        //loader: 'style-loader!css-loader?' + qs.stringify({
+        //  modules: true,
+        //  importLoaders: 1,
+        //  localIdentName: '[path][name]-[local]'
+        //})
       },
       { test: /\.ya?ml$/, loader: 'json-loader!yaml-loader' }
 

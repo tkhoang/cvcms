@@ -60,6 +60,7 @@
     margin-top: 25px;
   }
 }
+
 .overlay {
   position: fixed;
   top: 0;
@@ -79,11 +80,12 @@
   width: 30%;
   position: relative;
   transition: all 5s ease-in-out;
+
 }
 
 .popup h2 {
   margin-top: 0;
-  color: #333;
+  color: red;
   font-family: Tahoma, Arial, sans-serif;
 }
 .popup .close {

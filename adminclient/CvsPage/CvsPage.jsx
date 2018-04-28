@@ -113,7 +113,7 @@ class CvsPage extends React.Component {
               <div className="col-md3">
                 <div className="card">
                   <div className="card-body">
-                    {cv.title}
+                    {cv.title} 
                     <br/>
                     { cv.deleting 
                         ? <T.text tag='em' text={{ key: "CvDeleting"}} />

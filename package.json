@@ -14,7 +14,8 @@
       "adminclient/*",
       "initclient/*",
       "initclient/*/*",
-      "*db.json*"
+      "*db.json*",
+      "css/*"
     ],
     "delay": "2500"
   },

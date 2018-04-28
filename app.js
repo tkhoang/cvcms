@@ -16,10 +16,18 @@ var express = require('express'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
   passport = require('passport'),
-  session = require('express-session');
+  session = require('express-session'),
+  config = require ('./webpack.config.js'),
+  cssModulesRequireHook = require ( 'css-modules-require-hook'),
+  webpack = require ( 'webpack'),
+  webpackDevMiddleware = require ( 'webpack-dev-middleware'),
+  webpackHotMiddleware = require ( 'webpack-hot-middleware');
 
-const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = isDeveloping ? 3000 : process.env.PORT;
+cssModulesRequireHook({generateScopedName: '[path][name]-[local]'});
+
+const compiler = webpack(config),
+  isDeveloping = process.env.NODE_ENV !== 'production',
+  port = isDeveloping ? 3000 : process.env.PORT;
 
 
 
@@ -63,6 +71,21 @@ app.use('/api',api);
 app.use('/admin',admin);
 app.use('/init',init);
 
+// Serve hot-reloading bundle to client
+app.use(webpackDevMiddleware(compiler, {
+  noInfo: true, publicPath: config.output.publicPath, stats: { colors: true } 
+}));
+app.use(webpackHotMiddleware(compiler));
+
+
+// Do "hot-reloading" of react stuff on the server
+// Throw away the cached client modules and let them be re-required next time
+compiler.plugin('done', function() {
+  console.log("Clearing /client/ module cache from server");
+  Object.keys(require.cache).forEach(function(id) {
+    if (/[\/\\]adminclient[\/\\]/.test(id)) delete require.cache[id];
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

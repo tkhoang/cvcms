@@ -17,7 +17,7 @@ class HomePage extends React.Component {
       <div>
         <LeftMenu/>
         <div className="container"> 
-            logged as :{user.firstName}
+            logged as xxx:{user.firstName}
             <p>You are logged in with React!</p>
         </div>
       </div>
