@@ -58,4 +58,6 @@ router.route('/cvs')
 router.route('/cvs/:id')
   .delete(authController.isAuthenticated,cvs.deleteCv);
 
+router.route('/cv/:id')
+  .get(authController.isAuthenticated,cvs.getCv);
 module.exports = router;

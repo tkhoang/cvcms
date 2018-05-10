@@ -6,6 +6,7 @@ import { users } from './users.reducer';
 import { alert } from './alert.reducer';
 import { experience } from './experience.reducer';
 import { cvs } from './cvs.reducer';
+import { cv } from './cv.reducer';
 
 const rootReducer = combineReducers({
   authentication,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   users,
   alert,
   experience,
-  cvs
+  cvs,
+  cv
 });
 
 export default rootReducer;

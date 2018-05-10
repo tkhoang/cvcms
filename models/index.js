@@ -48,6 +48,8 @@ models = {
             table.string ('key',150);
             table.string ('language',8);
             table.text ('value');
+            table.integer('cv_id');
+            table.foreign('cv_id').references('id').inTable('cv');
           });
 	    }
       }).then(function (){
@@ -64,6 +66,8 @@ models = {
             table.datetime('end_time');
             table.string ('establishment',150);
             table.string ('location',150);
+            table.integer('cv_id');
+            table.foreign('cv_id').references('id').inTable('cv');
           });
 	    }
       }).then(function (){
@@ -78,6 +82,8 @@ models = {
             table.string ('language',8);
             table.string ('title',150);
             table.text ('description');
+            table.integer('experience_id');
+            table.foreign('experience_id').references('id').inTable('experiences');
           });
 	    }
       }).then(function (){
@@ -89,6 +95,8 @@ models = {
           return bookshelf.knex.schema.createTable('key_skills', function(table) {
             debug ('creating table key_skills');
             table.increments().primary();
+            table.integer('cv_id');
+            table.foreign('cv_id').references('id').inTable('cv');
           });
 	    }
       }).then(function (){
@@ -103,6 +111,8 @@ models = {
             table.string ('language',8); 
             table.string ('name',150);
             table.text ('description');	
+            table.integer('key_skill_id');
+            table.foreign('key_skill_id').references('id').inTable('key_skills');
           });
 	    }
       }).then(function (){

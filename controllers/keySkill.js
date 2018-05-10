@@ -1,4 +1,4 @@
-var keySkillValue = require('../models/keySkillValue');
+var keySkillValue = require('../models/keySkill');
 
 exports.getKeySkillValueByLang = function (lang, callback){
 	

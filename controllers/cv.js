@@ -64,3 +64,25 @@ exports.deleteCv = function(req, res){
     });
  
 };
+
+exports.getCv = function(req,res){
+  debug("get cv :", req.params.id);
+
+  cv
+  .where('id','=',req.params.id)
+  .fetch({withRelated: 
+           [
+             'infos', 
+             'experiences', 
+             'experiences_values',
+             'key_skills',
+             'key_skills_values' 
+          ]
+        })
+  .then((cv)=>{
+    res.json(cv);
+  }).catch(err=>{
+    debug("error: ",err.message);
+    res.send( {message: 'error while getting cv', description: err.message});
+  });
+}
