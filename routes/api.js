@@ -15,15 +15,11 @@ router.use (function(req, res, next){
 
 router.route('/infos')
   .get(authController.isAuthenticated,infos.getInfos)
-  .post(infos.postInfos);
+  .post(authController.isAuthenticated,infos.postInfos);
 
-router.route('/infos/:lang')
-  .get(infos.getInfoByLangAPI);
+router.route('/infos/:id')
+  .put(authController.isAuthenticated,infos.putInfo);
 
-router.route('/infos/:lang/:key')
-  .get(infos.getInfoByLangAndKey)
-  .put(infos.putInfoByLangAndKey)
-  .delete(infos.delInfoByLangAndKey);  
   
 router.route('/users')
   .post(users.postUsers);
@@ -59,5 +55,7 @@ router.route('/cvs/:id')
   .delete(authController.isAuthenticated,cvs.deleteCv);
 
 router.route('/cv/:id')
-  .get(authController.isAuthenticated,cvs.getCv);
+  .get(authController.isAuthenticated,cvs.getCv)
+  .put(authController.isAuthenticated,cvs.putCv);
+
 module.exports = router;

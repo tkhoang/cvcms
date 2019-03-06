@@ -5,45 +5,58 @@ import { connect } from 'react-redux';
 import { LeftMenu } from '../LeftMenu';
 import { FormComponent } from '../FormComponent';
 import { cvActions } from '../_actions';
-import { titlesection } from './cv.title.form';
+import { formsActions } from '../_actions';
+import { cvForms } from './cv.form';
 
 class CvPage extends React.Component {
+
   constructor(props){
     super(props)
 
     this.state = {
       id: props.match.params.id
+      //titlesection: titlesection
     }; 
-    this.handleChange = this.handleChange.bind(this);
-    this.functionName = this.functionName.bind(this);
   }
+
   componentDidMount() {
+    console.log(this)
     this.props.dispatch(cvActions.getCv(this.state.id));
-  }
-
-  functionName (e){
-    e.preventDefault();
-    this.setState({ stateVariable: true});
-  }
-
-  handleChange(e) {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.props.dispatch(formsActions.init(cvForms));
   }
 
   render() {
     T.setTexts( require('../en.yml'));
-    const { cv } = this.props;
-    const {} = this.state;
+    const { cv, forms } = this.props;
+    var titlesection, infosection;
+    if (forms.list){
+    titlesection = forms
+                     .list
+                     .find(page => page.id == 'cv' )
+                     .sections.find(section => section.id == 'titlesection' );
+    infosection = forms
+                     .list
+                     .find(page => page.id == 'cv' )
+                     .sections.find(section => section.id == 'infosection' );
+    }
     return (
       <div>
         <LeftMenu/> 
           <div className="container">
-            { cv &&
+            { cv && forms.list &&
+              <div>
               <FormComponent 
                 formParams={titlesection}
                 formEntries={cv.data}
+                uniqueId={true}
               />
+              <FormComponent 
+                formParams={infosection}
+                formEntries={cv.data.infos}
+                uniqueId={false}
+                parentId={cv.data.id}
+              />
+              </div>
             }
           </div>
       </div>
@@ -52,9 +65,10 @@ class CvPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const {cv} = state;
+  const {cv,forms} = state;
   return {
-    cv
+    cv,
+    forms
   };
 }
 

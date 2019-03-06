@@ -8,3 +8,5 @@ CvButtonAdd: Add
 CvFormNameMessage: The name is mandatory
 CvDelete: Delete
 CvDeleting: Deleting
+CvFormErrorUpdating: The field could not be updated
+CvPersonNameLabel: Name 

@@ -86,3 +86,19 @@ exports.getCv = function(req,res){
     res.send( {message: 'error while getting cv', description: err.message});
   });
 }
+
+exports.putCv = function(req, res) {
+  debug("updating a Cv", req.body);
+  new cv ({id: req.params.id})
+  .save(req.body, {method: 'update'})
+  .then(function(cv) {
+    res.send({message: 'cv updated', description:''});
+  }).catch(err=>{
+    debug("error: ",err.message);
+    res.status(500);
+    res.statusMessage = 'error while updating a cv :' + err.message;
+    res.send( {message: 'error while updating a cv', description: err.message});
+    }
+  );
+}
+

@@ -17,8 +17,8 @@ export function cv(state = {}, action) {
     error: action.error
     };
   case cvConstants.ACTION_EDIT:
-    return {
       console.log('reducer');
+    return {
       edit: action.edit
     };
   default:

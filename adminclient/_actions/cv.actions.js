@@ -26,11 +26,11 @@ function getCv(id) {
   function failure(error) { return { type: cvConstants.ACTION_FAILURE, error } }
 }
  
-function edit(id) {
+function edit(key) {
   return dispatch => {
     console.log('edit');
-    dispatch(edit(id));
+    dispatch(edit());
   };
  
-  function edit(id) { return { type: cvConstants.ACTION_EDIT}, {edit:id} }
+  function edit() { return { type: cvConstants.ACTION_EDIT} }
 }

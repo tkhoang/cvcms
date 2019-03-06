@@ -49,12 +49,12 @@ exports.getInfos = function(req, res){
  *   callback res.json with insert code
  */
 exports.postInfos = function(req, res) {
-	new info ({key:req.body.key, language:req.body.language, value:req.body.value})
-		.save()
+	new info (req.body)
+		.save(null, {method: 'insert'})
 		.then(function(info){
-		    if (err){res.send(err);}
 			res.json({message: 'info inserted', data:info.toJSON()});
 		}).catch(function(err) {
+                        console.log(err.message);
 			res.send({message: 'info not inserted', description:err});
 		});
 }
@@ -107,13 +107,13 @@ exports.getInfoByLangAndKey = function (req, res) {
  *      .body.value
  *   callback res.json with update code
  */
-exports.putInfoByLangAndKey = function (req, res) {
+exports.putInfo = function (req, res) {
 	info
-	.where({language:req.params.lang, key:req.params.key})
+	.where({id:req.params.id})
 	.fetch()
 	.then(function(info) {
 		info
-		.save({value:req.body.value})
+		.save(req.body)
 		.then(function(info) {
 			res.json({message: 'info updated', data: info.toJSON()});
 		}).catch(function(err) {

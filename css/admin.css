@@ -85,7 +85,6 @@
 
 .popup h2 {
   margin-top: 0;
-  color: red;
   font-family: Tahoma, Arial, sans-serif;
 }
 .popup .close {
@@ -105,4 +104,7 @@
   max-height: 30%;
   overflow: auto;
 }
-
+.disable-form {
+  border: 1px lightgrey solid;
+  width: 100px 
+}

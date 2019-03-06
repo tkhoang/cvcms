@@ -24,21 +24,11 @@ function getAll() {
  
  
 function addCv(cvname) {
-  var details = {
-    title: cvname
-  };
-
-  var formBody = [];
-  for (var property in details) {
-    var encodedKey = encodeURIComponent(property);
-    var encodedValue = encodeURIComponent(details[property]);
-    formBody.push(encodedKey + "=" + encodedValue);
-  }
-  formBody = formBody.join("&");
+  var body = {"title": cvname}; 
   const requestOptions = {
     method:  'POST',
     headers: authHeader(),
-    body: formBody
+    body: JSON.stringify(body)
   };
  
   return fetch('/api/cvs', requestOptions)
